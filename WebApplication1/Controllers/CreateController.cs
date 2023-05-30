@@ -24,9 +24,19 @@ namespace WebApplication1.Controllers
         }
 
         // GET: api/Create/5
-        public void Get(int id)
+        public Result Get(string UserAccount)
         {
-
+            sb.Clear();
+            sb.AppendFormat("SELECT * FROM `cinemawebdata`.`user` WHERE UserAccount='{0}'",UserAccount);
+            var user = db.Query(sb.ToString()).ToList();
+            if (user.Count>0)
+            {
+                return Result.error("已有此用户");
+            }
+            else
+            {
+                return Result.success();
+            }
         }
 
         // POST: api/Create
