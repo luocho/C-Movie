@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
             {
                 //请求的正在热映
                 case 1:
-                    sb.AppendLine("select * from movie where StateID=1 order by MovieScore limit 10");
+                    sb.AppendLine("select * from movie where StateID=1 order by MovieScore desc limit 10");
                     break;
                 case 2:
                     sb.AppendLine("select * from movie where StateID=2 order by MovieScore limit 10");
