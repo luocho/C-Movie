@@ -161,6 +161,7 @@
     <Compile Include="Controllers\boardController.cs" />
     <Compile Include="Controllers\CreateController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\FilmsListController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\testController.cs" />
     <Compile Include="Global.asax.cs">
