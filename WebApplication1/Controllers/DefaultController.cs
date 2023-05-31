@@ -17,7 +17,7 @@ namespace WebApplication1.Controllers
         //swiper轮播图片数据
         public Result Get()
         {
-            var data = db.Query("SELECT * FROM movie ORDER BY MovieScore DESC LIMIT 5").ToList();
+            var data = db.Query("SELECT * FROM movie WHERE BigAddressID=1 ORDER BY MovieScore DESC LIMIT 5").ToList();
             if (data != null)
             {
                 return Result.success(data);
@@ -27,26 +27,44 @@ namespace WebApplication1.Controllers
 
         // GET: api/Default/5
         //电影类型数据（正在热映、即将上映、经典影片）
-        public Result Get(int id)
+        public Result Get(int id, int addid)
         {
             if (id == 1)
             {
-                var data = db.Query("SELECT * FROM movie a JOIN moviestate b ON a.StateID=b.StateID WHERE a.StateID=" + id ).ToList();
+                var data = db.Query("SELECT * FROM movie a JOIN moviestate b ON a.StateID=b.StateID WHERE a.StateID=" + id + " and BigAddressID=" + addid).ToList();
                 if (data != null) return Result.success(data);
                 else return Result.error("404页面丢失");
             }
             else if (id == 2)
             {
-                var data = db.Query("SELECT * FROM movie a JOIN moviestate b ON a.StateID=b.StateID WHERE a.StateID=" + id).ToList();
+                var data = db.Query("SELECT * FROM movie a JOIN moviestate b ON a.StateID=b.StateID WHERE a.StateID=" + id + " and BigAddressID=" + addid).ToList();
                 if (data != null) return Result.success(data);
                 else return Result.error("404页面丢失");
             }
             else
             {
-                var data = db.Query("SELECT * FROM movie a JOIN moviestate b ON a.StateID=b.StateID WHERE a.StateID=" + id + " ORDER BY MovieScore DESC").ToList();
+                var data = db.Query("SELECT * FROM movie a JOIN moviestate b ON a.StateID=b.StateID WHERE a.StateID=" + id + " and BigAddressID=" + addid + " ORDER BY MovieScore DESC").ToList();
                 if (data != null) return Result.success(data);
                 else return Result.error("404页面丢失");
             }
+        }
+
+        //首页榜单数据
+        public Result Get(string top, int addid)
+        {
+            if (top == "票房")
+            {
+                var data = db.Query("SELECT * FROM movie where BigAddressID=" + addid + " ORDER BY MovieGrossed DESC LIMIT 10").ToList();
+                if (data != null) return Result.success(data);
+                else return Result.error("404页面丢失");
+            }
+            else if (top == "分数")
+            {
+                var data = db.Query("SELECT * FROM movie where BigAddressID=" + addid + " ORDER BY MovieScore DESC LIMIT 10").ToList();
+                if (data != null) return Result.success(data);
+                else return Result.error("404页面丢失");
+            }
+            else return Result.error("404页面丢失");
         }
 
         // POST: api/Default
